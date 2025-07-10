@@ -11,5 +11,15 @@ export default [
     rules: {
       'capitalized-comments': ['error', 'always'],
     },
+    overrides: [
+      {
+        "files": ["**/*.test.js"],
+        "rules": {
+          // Disable specific rules just for test files
+          "no-unused-expressions": "off",
+          "no-undef": "off"
+        }
+      }
+    ]
   },
 ];
