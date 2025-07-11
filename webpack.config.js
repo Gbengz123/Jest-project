@@ -68,5 +68,7 @@ module.exports = {
     }),
 
     // new BundleAnalyzerPlugin(),
-  ]
+  ],
+  
+  presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
 };
