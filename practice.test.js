@@ -23,3 +23,35 @@ test('calculator', () => {
   expect(calc.divide(8,4)).toBe(2)
   expect(calc.subtract(1,2)).toBe(-1)
 })
+
+test('analyzeArray',  () => {
+  function analyzeArray(arr){
+    const average = arr.reduce((total, currentNum) => {
+      return currentNum + total
+    }, 0) / arr.length
+
+    const max = arr.reduce((max, currentNumber) => {
+      if(currentNumber > max) return currentNumber
+      return max
+    }, arr[0])
+
+    const min = arr.reduce((min, currentNumber) => {
+      if(currentNumber < min) return currentNumber
+      return min
+    }, arr[0])
+
+    return {
+      average,
+      min,
+      max,
+      length: arr.length
+    }
+  }
+
+  expect(analyzeArray([1,8,3,4,2,6])).toEqual({
+    average: 4,
+    min: 1,
+    max: 8,
+    length: 6
+  })
+})
