@@ -1,6 +1,8 @@
 import './style.css'
 
 const ship = document.querySelector('.ship');
+const gameBoard = document.getElementById('game-board')
+const cells = document.querySelectorAll('.cell')
 
 let isDragging = false;
 let offsetX, offsetY;
@@ -35,6 +37,37 @@ document.addEventListener('mouseup', () => {
   isDragging = false;
 });
 
+// Gets headcell occupied by the ship
+function getHeadCellOccupied(x, y) {
+  // Gameboard location relative to viewport
+  const gameBoardLocation = gameBoard.getBoundingClientRect();
+
+  // get absX and absY position of headcell using ships coordinates (x, y)
+  const absX = gameBoardLocation.left + x;
+  const absY = gameBoardLocation.top + y;
+
+  //returns all elements from top to bottom in that location
+  const elements = document.elementsFromPoint(absX, absY);
+
+  // Get the element at that absolute position
+  return elements.find(el => el.classList.contains('cell'));
+}
+
+// set coordinate ids for all the cells
+function setCellCoordinates(){
+  let i = 0 // keep track of column
+  let row = 1
+  const column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+
+  cells.forEach(cell => {
+    if(i === column.length){
+      i = 0
+      row++
+    }
+    cell.id = `${column[i]}` + `${row}`
+    i++
+  })
+}
 
 
 
