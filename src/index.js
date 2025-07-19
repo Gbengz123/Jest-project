@@ -4,6 +4,8 @@ const ship = document.querySelector('.ship');
 const gameBoard = document.getElementById('game-board')
 const cells = document.querySelectorAll('.cell')
 
+setCellCoordinates()
+
 let isDragging = false;
 let offsetX, offsetY;
 
@@ -17,6 +19,7 @@ ship.addEventListener('mousedown', (e) => {
 // ship snapped X and Y value (the nearest x cell or y cell as we move the mouse)
 let snappedX = 80
 let snappedY = 80
+let previousSnappedX, previousSnappedY;
 document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
 
@@ -29,12 +32,24 @@ document.addEventListener('mousemove', (e) => {
   snappedX = Math.round(rawX / cellSize) * cellSize;
   snappedY = Math.round(rawY / cellSize) * cellSize;
 
-  ship.style.left = snappedX + 'px';
-  ship.style.top = snappedY + 'px';
+  //check if we are snapping onto a cell
+  if(getHeadCellOccupied(snappedX + 40, snappedY + 40)){
+    ship.style.left = snappedX + 'px';
+    ship.style.top = snappedY + 'px';
+
+    previousSnappedX = snappedX
+    previousSnappedY = snappedY
+  } else{
+    ship.style.left = rawX + 'px';
+    ship.style.top = rawY + 'px';
+  }
+  
 });
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
+  ship.style.left = previousSnappedX + 'px';
+  ship.style.top = previousSnappedY + 'px';
 });
 
 // Gets headcell occupied by the ship
